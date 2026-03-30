@@ -18,7 +18,7 @@ export default function Home() {
       <Navbar />
       <main className="min-h-screen">
         <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-        <ProductsSection products={products} searchQuery={searchQuery} />
+        <ProductsSection products={products} />
         <BenefitsSection />
         <AboutSection />
         <FinalCtaSection />

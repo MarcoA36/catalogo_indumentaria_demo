@@ -14,7 +14,8 @@ export interface Product {
     colors?: string[]
     sizes?: string[]
   }
-  comboItems?: string[]
+  comboItems?: string[],
+    isOffer?: boolean ,
 }
 
 export const tagLabels: Record<ProductTag, string> = {
@@ -52,7 +53,8 @@ export const products: Product[] = [
     options: {
       colors: ["Blanco", "Negro", "Gris"],
       sizes: ["S", "M", "L", "XL"]
-    }
+    },
+    isOffer: true,
   },
   {
     id: "2",
@@ -69,7 +71,8 @@ export const products: Product[] = [
     options: {
       colors: ["Negro", "Gris Melange", "Azul Marino"],
       sizes: ["S", "M", "L", "XL"]
-    }
+    },
+    isOffer: true,
   },
   {
     id: "3",
@@ -86,7 +89,8 @@ export const products: Product[] = [
     options: {
       colors: ["Celeste", "Azul Oscuro"],
       sizes: ["36", "38", "40", "42", "44"]
-    }
+    },
+    isOffer: true
   },
   {
     id: "4",
@@ -103,7 +107,8 @@ export const products: Product[] = [
     options: {
       colors: ["Azul Clasico", "Negro"],
       sizes: ["S", "M", "L", "XL"]
-    }
+    },
+    isOffer: true
   },
   {
     id: "17",
@@ -241,7 +246,8 @@ export const products: Product[] = [
     options: {
       colors: ["Negro", "Gris Oscuro"],
       sizes: ["S", "M", "L", "XL"]
-    }
+    },
+    
   },
   {
     id: "21",
@@ -278,23 +284,7 @@ export const products: Product[] = [
       sizes: ["S", "M", "L", "XL"]
     }
   },
-  {
-    id: "10",
-    name: "Corpiño Deportivo Sin Costuras",
-    price: 9500,
-    description: "Corpiño sin costuras, muy comodo. Ideal para usar todo el dia.",
-    category: "Ropa interior",
-    images: [
-      "https://images.unsplash.com/photo-1616677381964-8fb2da0c37fb?w=600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=600&h=600&fit=crop"
-    ],
-    tags: ["por-encargo"],
-    isInStock: false,
-    options: {
-      colors: ["Nude", "Negro", "Blanco"],
-      sizes: ["S", "M", "L", "XL"]
-    }
-  },
+
   {
     id: "11",
     name: "Pack x5 Bombachas Algodon",

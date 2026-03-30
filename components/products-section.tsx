@@ -1,61 +1,45 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ProductCard } from "./product-card"
 import { ProductModal } from "./product-modal"
 import type { Product } from "@/lib/products"
-import { categories } from "@/lib/products"
+import { Button } from "@/components/ui/button"
 
 interface ProductsSectionProps {
   products: Product[]
-  searchQuery: string
 }
 
-export function ProductsSection({ products, searchQuery }: ProductsSectionProps) {
+export function ProductsSection({ products }: ProductsSectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState("Todos")
+  const router = useRouter()
 
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+  // 👇 solo ofertas / destacados
+  const featuredProducts = products
+    .filter((product) => product.isOffer)
+    .slice(0, 8)
 
   return (
     <section id="products" className="bg-secondary/50 px-4 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">
+        
+        {/* Header */}
         <div className="text-center">
           <span className="mb-4 inline-block text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Catalogo
+            Ofertas
           </span>
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Nuestros Productos
+          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+            Productos Destacados
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-pretty text-muted-foreground">
-            Ropa urbana, deportiva, interior y calzado. Stock disponible y productos por encargo.
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+            Algunos de nuestros productos en oferta. Mirá todo el catálogo completo.
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="mt-10 flex flex-wrap justify-center gap-2">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                selectedCategory === category
-                  ? "bg-foreground text-background"
-                  : "bg-card text-muted-foreground hover:bg-card hover:text-foreground"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
+        {/* Productos */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {filteredProducts.map((product) => (
+          {featuredProducts.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -64,15 +48,18 @@ export function ProductsSection({ products, searchQuery }: ProductsSectionProps)
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
-          <div className="mt-12 rounded-lg border border-border bg-card p-12 text-center">
-            <p className="text-muted-foreground">
-              No encontramos productos con esa busqueda
-            </p>
-          </div>
-        )}
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <Button
+            size="lg"
+            onClick={() => router.push("/productos")}
+          >
+            Ver catálogo completo
+          </Button>
+        </div>
       </div>
 
+      {/* Modal */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
