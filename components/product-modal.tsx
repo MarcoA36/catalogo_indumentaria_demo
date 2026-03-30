@@ -1,60 +1,78 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { X, ChevronLeft, ChevronRight, Minus, Plus, MessageCircle, ShoppingBag, Clock, RefreshCw, Package } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { Product } from "@/lib/products"
-import { tagLabels, tagColors } from "@/lib/products"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Minus,
+  Plus,
+  MessageCircle,
+  ShoppingBag,
+  Clock,
+  RefreshCw,
+  Package,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import type { Product } from "@/lib/products";
+import { tagLabels, tagColors } from "@/lib/products";
 
 interface ProductModalProps {
-  product: Product
-  onClose: () => void
+  product: Product;
+  onClose: () => void;
 }
 
 export function ProductModal({ product, onClose }: ProductModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [selectedColor, setSelectedColor] = useState(product.options?.colors?.[0] || "")
-  const [selectedSize, setSelectedSize] = useState(product.options?.sizes?.[0] || "")
-  const [quantity, setQuantity] = useState(1)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(
+    product.options?.colors?.[0] || "",
+  );
+  const [selectedSize, setSelectedSize] = useState(
+    product.options?.sizes?.[0] || "",
+  );
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "unset"
-    }
-  }, [])
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const formattedPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
     minimumFractionDigits: 0,
-  }).format(product.price)
+  }).format(product.price);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % product.images.length)
-  }
+    setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
+  };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length)
-  }
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + product.images.length) % product.images.length,
+    );
+  };
 
   const handleWhatsApp = () => {
-    const stockStatus = product.isInStock ? "En stock" : "Por encargo"
-    const message = `Hola! Me interesa: ${product.name}${selectedColor ? ` - Color: ${selectedColor}` : ""}${selectedSize ? ` - Talle: ${selectedSize}` : ""} - Cantidad: ${quantity} (${stockStatus})`
-    const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
-  }
+    const stockStatus = product.isInStock ? "En stock" : "Por encargo";
+    const message = `Hola! Me interesa: ${product.name}${selectedColor ? ` - Color: ${selectedColor}` : ""}${selectedSize ? ` - Talle: ${selectedSize}` : ""} - Cantidad: ${quantity} (${stockStatus})`;
+    const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
-  const isCombo = product.tags.includes("combo")
-  const isPorEncargo = !product.isInStock
+  const isCombo = product.tags.includes("combo");
+  const isPorEncargo = !product.isInStock;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/60 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div 
+      <div
         className="relative max-h-[90vh] w-full max-w-4xl overflow-auto rounded-xl bg-card shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -68,14 +86,21 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
         <div className="grid md:grid-cols-2">
           {/* Image Gallery */}
           <div className="relative aspect-square bg-secondary">
-            <Image
+            {/* <Image
               src={product.images[currentImageIndex]}
               alt={product.name}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
+            /> */}
+            <Image
+              src={product.images[currentImageIndex]}
+              alt={product.name}
+              fill
+              className="object-cover cursor-zoom-in"
+              onClick={() => setIsLightboxOpen(true)}
             />
-            
+
             {/* Tags */}
             <div className="absolute left-3 top-3 flex flex-col gap-1.5">
               {product.tags.map((tag) => (
@@ -87,7 +112,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 </span>
               ))}
             </div>
-            
+
             {product.images.length > 1 && (
               <>
                 <button
@@ -102,14 +127,16 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 >
                   <ChevronRight className="h-5 w-5 text-foreground" />
                 </button>
-                
+
                 <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
                   {product.images.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
                       className={`h-2 w-2 rounded-full transition-colors ${
-                        index === currentImageIndex ? "bg-foreground" : "bg-card/60"
+                        index === currentImageIndex
+                          ? "bg-foreground"
+                          : "bg-card/60"
                       }`}
                     />
                   ))}
@@ -126,7 +153,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
             <h2 className="mt-2 text-2xl font-bold text-foreground md:text-3xl">
               {product.name}
             </h2>
-            
+
             {/* Combo Items */}
             {isCombo && product.comboItems && (
               <div className="mt-4 rounded-lg border border-border bg-secondary/50 p-3">
@@ -141,11 +168,11 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 </ul>
               </div>
             )}
-            
+
             <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
               {product.description}
             </p>
-            
+
             <p className="mt-4 text-2xl font-bold text-foreground md:text-3xl">
               {product.priceFrom ? `Desde ${formattedPrice}` : formattedPrice}
             </p>
@@ -255,6 +282,65 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
           </div>
         </div>
       </div>
+      {/* {isLightboxOpen && (
+  <div
+    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90"
+    onClick={() => setIsLightboxOpen(false)}
+  >
+    <button
+      onClick={() => setIsLightboxOpen(false)}
+      className="absolute top-4 right-4 z-50 rounded-full bg-white p-2"
+    >
+      <X className="h-5 w-5 text-black" />
+    </button>
+
+    <Image
+      src={product.images[currentImageIndex]}
+      alt={product.name}
+      width={1200}
+      height={1200}
+      className="object-contain max-h-[90vh]"
+    />
+  </div>
+)} */}
+{isLightboxOpen && (
+  <div
+    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90"
+    onClick={() => setIsLightboxOpen(false)}
+  >
+    <button
+      onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
+      className="absolute top-4 right-4 z-50 rounded-full bg-white p-2"
+    >
+      <X className="h-5 w-5 text-black" />
+    </button>
+
+    <Image
+      src={product.images[currentImageIndex]}
+      alt={product.name}
+      width={1200}
+      height={1200}
+      className="object-contain max-h-[90vh]"
+    />
+
+    {product.images.length > 1 && (
+      <>
+        <button
+          onClick={(e) => { e.stopPropagation(); prevImage(); }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); nextImage(); }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+      </>
+    )}
+  </div>
+)}
     </div>
-  )
+  );
 }

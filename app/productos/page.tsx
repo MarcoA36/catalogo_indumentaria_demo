@@ -1,7 +1,13 @@
 // "use client"
 
 import ProductsClient from "./ProductClient"
-
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  return <ProductsClient searchParams={searchParams} />
+}
 // import { useState, useMemo } from "react"
 // import { useSearchParams } from "next/navigation"
 // import { Search, X } from "lucide-react"
@@ -133,10 +139,3 @@ import ProductsClient from "./ProductClient"
 
 
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  return <ProductsClient searchParams={searchParams} />
-}

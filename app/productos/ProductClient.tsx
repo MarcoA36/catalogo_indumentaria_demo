@@ -43,9 +43,10 @@ export default function ProductosClient({ searchParams }: Props) {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-background pt-20">
+      <main className="min-h-screen bg-background">
         {/* Header */}
-        <section className="border-b border-border bg-secondary/30 px-4 py-12 md:py-16">
+        <section className="border-b border-border bg-secondary px-4 py-12 md:py-16">
+    
           <div className="mx-auto max-w-6xl">
             <h1 className="text-center text-3xl font-bold md:text-4xl">
               Nuestro Catálogo
@@ -103,7 +104,7 @@ export default function ProductosClient({ searchParams }: Props) {
             </p>
 
             {/* Grid */}
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
