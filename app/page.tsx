@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <main className="min-h-screen">
         <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         <ProductsSection products={products} />
@@ -23,7 +23,7 @@ export default function Home() {
         <AboutSection />
         <FinalCtaSection />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

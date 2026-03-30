@@ -41,8 +41,7 @@ export default function ProductosClient({ searchParams }: Props) {
 
   return (
     <>
-      <Navbar />
-
+ 
       <main className="min-h-screen bg-background">
         {/* Header */}
         <section className="border-b border-border bg-secondary px-4 py-12 md:py-16">
@@ -123,7 +122,7 @@ export default function ProductosClient({ searchParams }: Props) {
         </section>
       </main>
 
-      <Footer />
+
 
       {selectedProduct && (
         <ProductModal

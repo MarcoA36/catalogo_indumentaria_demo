@@ -37,7 +37,7 @@ const handleNavClick = (href: string) => {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         
         {/* Logo */}
-        <button onClick={() => handleNavClick("#")} className="flex items-center gap-2">
+        <button onClick={() => handleNavClick("/#")} className="flex items-center gap-2">
           <ShoppingBag className="h-6 w-6 text-foreground" />
           <span className="text-lg font-semibold tracking-tight text-foreground">
             Moda Local
