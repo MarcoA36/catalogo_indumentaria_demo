@@ -2,11 +2,11 @@ import { MessageCircle, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function FinalCtaSection() {
-  const handleWhatsApp = () => {
-    const message = "Hola! Quiero ver mas productos o hacer una consulta"
-    const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
-  }
+  // const handleWhatsApp = () => {
+  //   const message = "Hola! Quiero ver mas productos o hacer una consulta"
+  //   const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
+  //   window.open(whatsappUrl, "_blank")
+  // }
 
   return (
     <section className="bg-foreground px-4 py-20 md:py-28">
@@ -20,7 +20,7 @@ export function FinalCtaSection() {
         
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
-            onClick={handleWhatsApp}
+          
             size="lg"
             className="w-full gap-2 bg-background text-foreground hover:bg-background/90 sm:w-auto"
           >
