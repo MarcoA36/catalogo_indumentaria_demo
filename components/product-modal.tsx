@@ -262,7 +262,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
             {/* CTA */}
             <div className="mt-auto pt-6">
               <Button
-                onClick={handleWhatsApp}
+                // onClick={handleWhatsApp}
                 className="w-full gap-2"
                 size="lg"
               >
