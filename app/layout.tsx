@@ -1,51 +1,52 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-import DemoBadge from '@/components/DemoBadge';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import DemoBadge from "@/components/DemoBadge";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Tu Tienda de Ropa | Zona Norte - Urbano, Sport, Calzado',
-  description: 'Ropa urbana, deportiva, interior y calzado. Stock y productos por encargo. Envios a domicilio y retiro en local - Zona Norte.',
-  generator: 'v0.app',
+  title: "Demo Catálogo Web | Productos y Servicios",
+  description:
+    "Ejemplo de catálogo web adaptable a cualquier emprendimiento. Diseño simple, navegación clara y contacto directo con clientes.",
+  generator: "v0.app",
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
       },
       {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
       },
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: "/icon.png",
+        type: "image/svg+xml",
       },
     ],
-    apple: '/apple-icon.png',
+    apple: "/apple-icon.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="es">
       <body className="font-sans antialiased">
-        <Navbar/>
+        <Navbar />
         {children}
         <Analytics />
-        <DemoBadge/>
-        <Footer/>
+        <DemoBadge />
+        <Footer />
       </body>
     </html>
-  )
+  );
 }
